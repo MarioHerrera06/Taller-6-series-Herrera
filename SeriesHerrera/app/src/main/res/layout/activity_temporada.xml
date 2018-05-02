@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TemporadaActivity"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:orientation="vertical"
+        android:background="#000000"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:text="SERIES TOP"
+            android:background="#000000"
+            android:textColor="#9b0000"
+            android:layout_marginBottom="3dp"
+            android:textStyle="bold"
+            android:textSize="45sp"/>
+
+
+
+
+        <ImageView
+            android:id="@+id/imgSerieTemporada"
+            android:layout_marginTop="0dp"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:src="@drawable/casa_de_papel"/>
+
+        <TextView
+            android:id="@+id/txtSerieTemporada"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="La Casa De Papel"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"/>
+
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="descripcion "
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        style="@style/descripcionImagen"
+        />
+
+    <ScrollView
+        android:layout_marginTop="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal">
+            <Button
+                android:id="@+id/boton1"
+            style="@style/botones"
+                android:text="Temporada 1"
+            />
+
+            <Button
+                android:id="@+id/boton2"
+                style="@style/botones"
+                android:text="Temporada 2"
+                />
+
+            <Button
+                android:id="@+id/boton3"
+                style="@style/botones"
+                android:text="Temporada 3"
+                />
+
+            <Button
+                android:id="@+id/boton4"
+                style="@style/botones"
+                android:text="temporada 4"
+                />
+
+            <Button
+                android:id="@+id/boton5"
+                style="@style/botones"
+                android:text="temporada 5"
+                />
+
+            <Button
+                android:id="@+id/boton6"
+                style="@style/botones"
+                android:text="temporada 6"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
