@@ -1,11 +1,22 @@
 package com.example.marioherrera.seriesherrera;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.marioherrera.seriesherrera.R;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.view.Gravity;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +27,35 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerViewSerie;
     private RecyclerViewAdapter adaptadorSerie;
 
-
+    private Transition transition;
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
+
+        Fade fadeIn = new Fade(Fade.IN);
+        fadeIn.setDuration(1000);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+
+        getWindow().setAllowReturnTransitionOverlap(false);
+        getWindow().setEnterTransition(fadeIn);
+        getWindow().setReturnTransition(fadeIn);
+
+
+        transition= new Slide(Gravity.LEFT);
+        transition.setDuration(1500);
+        transition.setInterpolator(new DecelerateInterpolator());
+        getWindow().setExitTransition(transition);
+
+
         recyclerViewSerie = (RecyclerView) findViewById(R.id.recyclerSeries);
         recyclerViewSerie.setLayoutManager(new GridLayoutManager(this, 2));
 
-        adaptadorSerie = new RecyclerViewAdapter(this,obtenerSerie());
+        adaptadorSerie = new RecyclerViewAdapter(this,this,obtenerSerie());
         recyclerViewSerie.setAdapter(adaptadorSerie);
 
     }

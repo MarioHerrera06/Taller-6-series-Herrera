@@ -1,13 +1,22 @@
 package com.example.marioherrera.seriesherrera;
 
+import android.animation.Animator;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Explode;
+import android.transition.Transition;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +25,8 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
     private Context mContext;
+    private Activity activity;
+
 
 
 
@@ -36,9 +47,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public List<SerieModelo> listaSeries;
-    public RecyclerViewAdapter(Context mContext, List<SerieModelo> listaSeries){
+    public RecyclerViewAdapter(Activity activity,Context mContext, List<SerieModelo> listaSeries){
         this.listaSeries=listaSeries;
         this.mContext=mContext;
+        this.activity=activity;
     }
 
     @Override
@@ -57,8 +69,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(mContext, TemporadaActivity.class);
 
 
@@ -66,12 +80,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putExtra("sinopsis",listaSeries.get(position).getSinopsis());
                 intent.putExtra("imgSerie",listaSeries.get(position).getImgSerie());
 
-                mContext.startActivity(intent);
+                activity.getWindow().setExitTransition(new Explode().setDuration(1000));
+                activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, v,"").toBundle());
+
+
             }
         });
 
 
 
+
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder viewHolder) {
+        super.onViewDetachedFromWindow(viewHolder);
+        viewHolder.itemView.clearAnimation();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onViewAttachedToWindow(ViewHolder viewHolder) {
+        super.onViewAttachedToWindow(viewHolder);
+        animateCircularReveal(viewHolder.itemView);
+    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    public void animateCircularReveal(View view) {
+        int centerX = 0;
+        int centerY = 0;
+        int startRadius = 0;
+        int endRadius = Math.max(view.getWidth(), view.getHeight());
+        Animator animation = ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
+        view.setVisibility(View.VISIBLE);
+        animation.start();
     }
 
     @Override
